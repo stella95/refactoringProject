@@ -1,0 +1,24 @@
+name,Name: 
+afm,AFM: 
+status,Status: 
+income,Income: 
+receipts,Receipts:
+receiptId,Receipt ID: 
+date,Date: 
+kind,Kind: 
+amount,Amount: 
+company,Company: 
+country,Country: 
+city,City: 
+street,Street: 
+number,Number: 
+basicTax,Basic Tax: 
+taxInc,Basic Tax: 
+taxDec,Tax Decrease: 
+totalTax,Total Tax: 
+totalRecAm,Total Receipts Amount: 
+entertainment,Entertainment: 
+basic,Basic: 
+travel,Travel: 
+health,Health: 
+other,Other: 

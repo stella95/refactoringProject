@@ -1,0 +1,24 @@
+name,<Name> , </Name>
+afm,<AFM> , </AFM>
+status,<Status> , </Status>
+income,<Income> , </Income>
+receipts,<Receipts>,</Receipts>
+receiptId,<ReceiptID> , </ReceiptID>
+date,<Date> , </Date>
+kind,<Kind> , </Kind>
+amount,<Amount> , </Amount>
+company,<Company> , </Company>
+country,<Country> , </Country>
+city,<City> , </City>
+street,<Street> , </Street>
+number,<Number> , </Number>
+basicTax,<BasicTax> , </BasicTax>
+taxInc,<TaxIncrease> , </TaxIncrease>
+taxDec,<TaxDecrease> , </TaxDecrease>
+totalTax,<TotalTax> , </TotalTax>
+totalRecAm,<Receipts> , </Receipts>
+entertainment,<Entertainment> , </Entertainment>
+basic,<Basic> , </Basic>
+travel,<Travel> , </Travel>
+health,<Health> , </Health>
+other,<Other> , </Other>
