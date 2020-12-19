@@ -21,7 +21,7 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 
 	private JList taxpayerReceiptsJList;
 	private int taxpayerID;
-	private Database database;	
+	private Database database = Database.getInstance();
 	
 	public TaxpayerReceiptsManagementJDialog(String windowTitle, int taxpayerID) {
 		this.taxpayerID = taxpayerID;

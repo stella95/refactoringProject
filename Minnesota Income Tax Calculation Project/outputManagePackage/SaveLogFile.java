@@ -14,6 +14,7 @@ import dataManagePackage.Taxpayer;
 
 public class SaveLogFile {
 	
+	private static SaveLogFile logInstance = null;
 	private HashMap<String,ArrayList<String>> receiptTagsMap = new HashMap<String,ArrayList<String>>();
 	private TagsMaps tagsMap = TagsMaps.getInstance();
 	private String logFileEnds;
@@ -21,7 +22,14 @@ public class SaveLogFile {
 	
 	public SaveLogFile() {}
 	
-	public void saveTaxpayerInfoToXmlLogFile(String folderSavePath, int taxpayerIndex, String typeFile){
+	public static SaveLogFile getInstance() {
+		if(logInstance == null)
+			logInstance = new SaveLogFile();
+		return logInstance;
+	}
+	
+	public void saveTaxpayerInfoToLogFile(String folderSavePath, int taxpayerIndex, String typeFile){
+		
 		Taxpayer taxpayer = database.getTaxpayerFromArrayList(taxpayerIndex);
 		if (typeFile=="txt"){
 			receiptTagsMap=tagsMap.getTxtMap();
@@ -32,6 +40,7 @@ public class SaveLogFile {
 			logFileEnds="_LOG.xml";
 		}
 		PrintWriter outputStream = null;
+		
 		try
 		{
 			outputStream = new PrintWriter(new FileOutputStream(folderSavePath+"//"+taxpayer.getAFM()+logFileEnds));
@@ -42,9 +51,9 @@ public class SaveLogFile {
 		}
 		
 		outputStream.println((receiptTagsMap.get("name")).get(0)+taxpayer.getName()+(receiptTagsMap.get("name")).get(1));
-		outputStream.println((receiptTagsMap.get("afm")).get(0)+taxpayer.getAFM()+(receiptTagsMap.get("afn")).get(1));
+		outputStream.println((receiptTagsMap.get("afm")).get(0)+taxpayer.getAFM()+(receiptTagsMap.get("afm")).get(1));
 		outputStream.println((receiptTagsMap.get("income")).get(0)+taxpayer.getIncome()+(receiptTagsMap.get("income")).get(1));
-		outputStream.println((receiptTagsMap.get("basixTax")).get(0)+taxpayer.getBasicTax()+(receiptTagsMap.get("basicTax")).get(1));
+		outputStream.println((receiptTagsMap.get("basicTax")).get(0)+taxpayer.getBasicTax()+(receiptTagsMap.get("basicTax")).get(1));
 		if (taxpayer.getTaxInxrease()!=0){
 			outputStream.println((receiptTagsMap.get("taxInc")).get(0)+taxpayer.getTaxInxrease()+(receiptTagsMap.get("taxInc")).get(1));
 		}else{
@@ -52,11 +61,11 @@ public class SaveLogFile {
 		}
 		outputStream.println((receiptTagsMap.get("totalTax")).get(0)+taxpayer.getTotalTax()+(receiptTagsMap.get("totalTax")).get(1));
 		outputStream.println((receiptTagsMap.get("totalRecAm")).get(0)+taxpayer.getTotalReceiptsAmount()+(receiptTagsMap.get("totalRecAm")).get(1));
-		outputStream.println((receiptTagsMap.get("entertainment")).get(0)+taxpayer.getEntertainmentReceiptsTotalAmount()+(receiptTagsMap.get("entertainment")).get(1));
-		outputStream.println((receiptTagsMap.get("basic")).get(0)+taxpayer.getBasicReceiptsTotalAmount()+(receiptTagsMap.get("basic")).get(1));
-		outputStream.println((receiptTagsMap.get("travel")).get(0)+taxpayer.getTravelReceiptsTotalAmount()+(receiptTagsMap.get("travel")).get(1));
-		outputStream.println((receiptTagsMap.get("health")).get(0)+taxpayer.getHealthReceiptsTotalAmount()+(receiptTagsMap.get("health")).get(1));
-		outputStream.println((receiptTagsMap.get("other")).get(0)+taxpayer.getOtherReceiptsTotalAmount()+(receiptTagsMap.get("other")).get(1));
+		outputStream.println((receiptTagsMap.get("entertainment")).get(0)+taxpayer.getReceiptsTotalAmount("Entertainment")+(receiptTagsMap.get("entertainment")).get(1));
+		outputStream.println((receiptTagsMap.get("basic")).get(0)+taxpayer.getReceiptsTotalAmount("Basic")+(receiptTagsMap.get("basic")).get(1));
+		outputStream.println((receiptTagsMap.get("travel")).get(0)+taxpayer.getReceiptsTotalAmount("Travel")+(receiptTagsMap.get("travel")).get(1));
+		outputStream.println((receiptTagsMap.get("health")).get(0)+taxpayer.getReceiptsTotalAmount("Health")+(receiptTagsMap.get("health")).get(1));
+		outputStream.println((receiptTagsMap.get("other")).get(0)+taxpayer.getReceiptsTotalAmount("Other")+(receiptTagsMap.get("other")).get(1));
 		
 		outputStream.close();
 		

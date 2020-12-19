@@ -1,5 +1,5 @@
 package dataManagePackage;
-import dataManagePackage.Receipt.*;
+
 import inputManagePackage.*;
 import outputManagePackage.*;
 
@@ -11,10 +11,11 @@ import java.util.List;
 public class Database {
 	private static Database databaseInstance = null;
 	private String taxpayersInfoFilesPath;
-	private ArrayList<Taxpayer> taxpayersArrayList = new ArrayList<Taxpayer>();
-	private InputSystem inputSystem = InputSystem.getInstance();
+	private ArrayList<Taxpayer> taxpayersArrayList;
 	
-	public Database() {}
+	public Database() {
+		taxpayersArrayList = new ArrayList<Taxpayer>();
+	}
 	
 	public static Database getInstance() {
 		if(databaseInstance == null)
@@ -31,6 +32,7 @@ public class Database {
 	}
 	
 	public void proccessTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles){
+		InputSystem inputSystem = InputSystem.getInstance();
 		inputSystem.addTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, taxpayersAfmInfoFiles);
 	}
 	
@@ -74,14 +76,16 @@ public class Database {
             }
          };
 		
+        SaveInputFile saveInputFile = SaveInputFile.getInstance();
+        
 		for (File file : taxpayersInfoFilesPathFileObject.listFiles(fileNameFilter)){
 			if (!file.getName().contains(taxpayersArrayList.get(index).getAFM())) continue;
 			
 			if (file.getName().toLowerCase().endsWith(".txt")){
-				OutputSystem.saveUpdatedTaxpayerTxtInputFile(file.getAbsolutePath(), index);
+				saveInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index, "txt");
 			}
 			if (file.getName().toLowerCase().endsWith(".xml")){
-				OutputSystem.saveUpdatedTaxpayerXmlInputFile(file.getAbsolutePath(), index);
+				saveInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index, "xml");
 			}
 			break;
 		}

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,6 +21,7 @@ public class InputSystemTest {
 	private Company company;
 	private ArrayList<String> taxpayersInfoFiles;
 	private InputSystem inputSystem;
+	private Database database;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -33,18 +33,15 @@ public class InputSystemTest {
 		taxpayersInfoFiles = new ArrayList<String>();
 		taxpayersInfoFiles.add("testinput.txt");
 		inputSystem =InputSystem.getInstance();
+		database=Database.getInstance();
 	}
 	
-	@After
-	public void tearDown() throws Exception {
-		
-	}
+	
 
 	@Test
 	public void testInputSystem() {
-		//InputSystem.addTaxpayersDataFromFilesIntoDatabase("C:\\Users\\stell\\eclipse-workspace\\Minnesota Income Tax Calculation Project\\files", taxpayersInfoFiles);
-		inputSystem.addTaxpayersDataFromFilesIntoDatabase("C:\\Users\\stell\\eclipse-workspace\\Minnesota Income Tax Calculation Project\\files", taxpayersInfoFiles);
-		systemTaxpayer=Database.getTaxpayerFromArrayList(0);
+		inputSystem.addTaxpayersDataFromFilesIntoDatabase("C:\\Users\\stell\\eclipse-workspace\\Minnesota Income Tax Calculation Project\\files\\testInputFile", taxpayersInfoFiles);
+		systemTaxpayer=database.getTaxpayerFromArrayList(0);
 		receipt=systemTaxpayer.getReceipt(0);
 		company=receipt.getCompany();
 		assertEquals(systemTaxpayer.getName(), "Apostolos Zarras");

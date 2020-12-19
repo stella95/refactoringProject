@@ -1,6 +1,7 @@
 package gui;
 import dataManagePackage.Database;
-import outputManagePackage.OutputSystem;
+import outputManagePackage.CreateCharts;
+import outputManagePackage.SaveLogFile;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -23,7 +24,9 @@ public class LoadedTaxpayersJDialog extends JDialog {
 
 	private JList loadedTaxpayersJList;
 	private JFrame appMainWindow;
-	private Database database;
+	private Database database = Database.getInstance();
+	private SaveLogFile saveLogFile = SaveLogFile.getInstance();
+	private CreateCharts createCharts = CreateCharts.getInstance();
 	
 	
 	public LoadedTaxpayersJDialog(JFrame appMainWindow) {
@@ -159,7 +162,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				int taxpayerIndex = loadedTaxpayersJList.getSelectedIndex();
 				if (taxpayerIndex!=-1){
-					OutputSystem.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);
+					createCharts.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
@@ -171,7 +174,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				int taxpayerIndex = loadedTaxpayersJList.getSelectedIndex();
 				if (taxpayerIndex!=-1){
-					OutputSystem.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);
+					createCharts.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
@@ -190,8 +193,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
-					    //edo prepei na mpei san parametros kai to txt
-					    OutputSystem.saveTaxpayerInfoToTxtLogFile(savePath, taxpayerIndex);
+					    saveLogFile.saveTaxpayerInfoToLogFile(savePath, taxpayerIndex, "txt");
 					}
 				}
 				else{
@@ -211,8 +213,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
-					    //xml
-					    OutputSystem.saveTaxpayerInfoToXmlLogFile(savePath, taxpayerIndex);
+					    saveLogFile.saveTaxpayerInfoToLogFile(savePath, taxpayerIndex, "xml");
 					}
 				}
 				else{

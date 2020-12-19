@@ -15,12 +15,15 @@ public class InputSystem {
 	
 	private ReceiptFactory receiptFactory;
 	private static InputSystem inputInstance = null;
-	private HashMap<String,ArrayList<String>> receiptTagsMap = new HashMap<String,ArrayList<String>>();
-	private TagsMaps tagsMap = TagsMaps.getInstance();
+	private HashMap<String,ArrayList<String>> receiptTagsMap;
+	private TagsMaps tagsMap;
 	private String typeFile;
-	private Database database = Database.getInstance();
 	
-	public InputSystem(){}
+	public InputSystem(){
+		receiptTagsMap = new HashMap<String,ArrayList<String>>();
+		tagsMap = TagsMaps.getInstance();
+		receiptFactory = new ReceiptFactory();
+	}
 	
 	public static InputSystem getInstance() {
 		if(inputInstance == null)
@@ -39,6 +42,7 @@ public class InputSystem {
 				receiptTagsMap=tagsMap.getXmlMap();
 				typeFile="xml";
 			}
+			Database database = Database.getInstance();
 			
 			Scanner inputStream = null;
 			try
@@ -50,7 +54,7 @@ public class InputSystem {
 				System.out.println("Problem opening " + afmInfoFile + " file.");
 				System.exit(0);
 			}			
-			
+
 			String taxpayerName = getParameterValueFromTxtFileLine(inputStream.nextLine(), (receiptTagsMap.get("name")).get(0), (receiptTagsMap.get("name")).get(1));
 			String taxpayerAFM = getParameterValueFromTxtFileLine(inputStream.nextLine(), (receiptTagsMap.get("afm")).get(0), (receiptTagsMap.get("afm")).get(1));
 			String taxpayerStatus = getParameterValueFromTxtFileLine(inputStream.nextLine(), (receiptTagsMap.get("status")).get(0), (receiptTagsMap.get("status")).get(1));

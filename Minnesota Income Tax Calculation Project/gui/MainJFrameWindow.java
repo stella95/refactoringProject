@@ -19,8 +19,7 @@ import javax.swing.JSeparator;
 public class MainJFrameWindow {
 
 	private JFrame taxationMainWindowJFrame;
-	private Database database;
-	
+	private Database database = Database.getInstance();	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

@@ -21,8 +21,8 @@ import java.awt.event.KeyEvent;
 public class InsertNewReceiptJDialog extends JDialog {
 
 	private int taxpayerID;
-	private ReceiptFactory receiptFactory;
-	private Database database;
+	private ReceiptFactory receiptFactory = new ReceiptFactory();
+	private Database database = Database.getInstance();
 	
 	
 	public InsertNewReceiptJDialog(int taxpayerID) {

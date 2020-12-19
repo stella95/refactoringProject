@@ -13,11 +13,20 @@ import dataManagePackage.Receipt.Receipt;
 
 public class SaveInputFile {
 	
-	private HashMap<String,ArrayList<String>> receiptTagsMap = new HashMap<String,ArrayList<String>>();
-	private TagsMaps tagsMap = TagsMaps.getInstance();
-	private Database database = Database.getInstance();
+	private static SaveInputFile saveInstance = null;
+	private HashMap<String,ArrayList<String>> receiptTagsMap;
+	private TagsMaps tagsMap;
 	
-	public SaveInputFile() {}
+	public SaveInputFile() {
+		receiptTagsMap = new HashMap<String,ArrayList<String>>();
+		tagsMap = TagsMaps.getInstance();
+	}
+	
+	public static SaveInputFile getInstance() {
+		if(saveInstance == null)
+			saveInstance = new SaveInputFile();
+		return saveInstance;
+	}
 	
 	public void saveUpdatedTaxpayerInputFile(String filePath, int taxpayerIndex, String typeFile){
 		
@@ -27,6 +36,7 @@ public class SaveInputFile {
 		else if (typeFile=="xml"){
 			receiptTagsMap=tagsMap.getXmlMap();
 		}
+		Database database = Database.getInstance();
 		
 		PrintWriter outputStream = null;
 		try
@@ -50,7 +60,7 @@ public class SaveInputFile {
 			outputStream.println();
 			
 			for (Receipt receipt : taxpayer.getReceiptsArrayList()){
-				outputStream.println((receiptTagsMap.get("receiptsId")).get(0)+receipt.getId()+(receiptTagsMap.get("receiptsId")).get(1));
+				outputStream.println((receiptTagsMap.get("receiptId")).get(0)+receipt.getId()+(receiptTagsMap.get("receiptId")).get(1));
 				outputStream.println((receiptTagsMap.get("date")).get(0)+receipt.getDate()+(receiptTagsMap.get("date")).get(1));
 				outputStream.println((receiptTagsMap.get("kind")).get(0)+receipt.getKind()+(receiptTagsMap.get("kind")).get(1));
 				outputStream.println((receiptTagsMap.get("amount")).get(0)+receipt.getAmount()+(receiptTagsMap.get("amount")).get(1));

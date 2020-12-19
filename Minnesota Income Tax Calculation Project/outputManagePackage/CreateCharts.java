@@ -12,18 +12,26 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import java.lang.String;
 
 import dataManagePackage.Database;
 import dataManagePackage.Taxpayer;
 
 public class CreateCharts {
 	
+	private static CreateCharts chartsInstance = null;
 	private DefaultPieDataset receiptPieChartDataset;
 	private JFreeChart receiptPieJFreeChart;
 	private PiePlot piePlot;
 	private Database database = Database.getInstance();
 	
 	public CreateCharts() {}
+	
+	public static CreateCharts getInstance() {
+		if(chartsInstance == null)
+			chartsInstance = new CreateCharts();
+		return chartsInstance;
+	}
 	
 	public DefaultPieDataset getReceiptPieChartDataset() {
 		return receiptPieChartDataset;
@@ -47,11 +55,11 @@ public class CreateCharts {
 		receiptPieChartDataset = new DefaultPieDataset();
 		Taxpayer taxpayer = database.getTaxpayerFromArrayList(taxpayerIndex);
 		
-		receiptPieChartDataset.setValue("Basic", taxpayer.getBasicReceiptsTotalAmount());
-		receiptPieChartDataset.setValue("Entertainment", taxpayer.getEntertainmentReceiptsTotalAmount());
-		receiptPieChartDataset.setValue("Travel", taxpayer.getTravelReceiptsTotalAmount());
-		receiptPieChartDataset.setValue("Health", taxpayer.getHealthReceiptsTotalAmount());
-		receiptPieChartDataset.setValue("Other", taxpayer.getOtherReceiptsTotalAmount());
+		receiptPieChartDataset.setValue("Basic", taxpayer.getReceiptsTotalAmount("Basic"));
+		receiptPieChartDataset.setValue("Entertainment", taxpayer.getReceiptsTotalAmount("Entertainment"));
+		receiptPieChartDataset.setValue("Travel", taxpayer.getReceiptsTotalAmount("Travel"));
+		receiptPieChartDataset.setValue("Health", taxpayer.getReceiptsTotalAmount("Health"));
+		receiptPieChartDataset.setValue("Other", taxpayer.getReceiptsTotalAmount("Other"));
 		
 		receiptPieJFreeChart = ChartFactory.createPieChart("Receipt Pie Chart", receiptPieChartDataset);
 		piePlot = (PiePlot)receiptPieJFreeChart.getPlot();

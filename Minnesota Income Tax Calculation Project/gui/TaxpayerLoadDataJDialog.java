@@ -23,7 +23,7 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 
 	private String afmInfoFilesFolderPath;
 	private JFrame appMainWindow;
-	private Database database;
+	private Database database = Database.getInstance();
 	
 	
 	public TaxpayerLoadDataJDialog(JFrame appMainWindow) {
